@@ -1,10 +1,19 @@
 from transformers import pipeline
-import pprint
+from pprint import pprint
 
 unmasker = pipeline(task='fill-mask', model='bert-base-uncased')
-result = unmasker("I love expensive clothes and I am a [MASK] model.")
+result = unmasker("I am a [MASK] model")
 
-for item in result:
-    print(f"{item['token_str']}: {item['score']:.4f}: {item['sequence']}")
+for i, item in enumerate(result, start=1):
+    print(
+        f"{i}. token={item['token_str']!r}, "
+        f"score={item['score']:.4f}, "
+        f"text={item['sequence']}"
+    )
+
+print('#'*50)
+
+pprint(result)
+
 
 
